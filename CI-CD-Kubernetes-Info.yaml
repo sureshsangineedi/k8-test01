@@ -8,7 +8,7 @@ on:
  
 jobs:
   kubernetes-info:
-    runs-on: self-hosted  # IMPORTANT: your self-hosted runner in the same network
+    runs-on: [self-hosted, windows]  # IMPORTANT: your self-hosted runner in the same network
  
     steps:
       - name: Checkout repository

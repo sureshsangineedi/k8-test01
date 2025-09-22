@@ -14,8 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
  
-      - name: Get cluster info
-        run: kubectl cluster-info
  
       - name: Get node info
         run: kubectl get nodes -o wide

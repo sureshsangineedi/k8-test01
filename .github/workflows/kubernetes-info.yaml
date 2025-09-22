@@ -1,4 +1,4 @@
-name: CI/CD Kubernetes Info
+name: Kubernetes-info
  
 on:
   push:

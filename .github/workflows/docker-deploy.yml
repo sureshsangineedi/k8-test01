@@ -1,0 +1,34 @@
+name: Build and Push Docker Image
+
+# Trigger manually or on push to main branch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # manual trigger
+
+jobs:
+  docker:
+    runs-on: [self-hosted, windows]
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 3: Build Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t myusername/myapp:latest .
+
+      # Step 4: Push Docker image to Docker Hub
+      - name: Push Docker Image
+        run: |
+          docker push myusername/myapp:latest

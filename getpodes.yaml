@@ -19,8 +19,6 @@ jobs:
           echo "=== Pods in All Namespaces ==="
           kubectl get pods -A -o wide
           
-          echo "=== Pod Details (describe) ==="
-          kubectl describe pods -A | head -50   # limit to first 50 lines
 
           echo "=== Pod Events ==="
           kubectl get events -A --sort-by=.metadata.creationTimestamp | tail -20

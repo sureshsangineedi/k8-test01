@@ -1,0 +1,23 @@
+name: Get Node Info text44
+# Trigger manually from Actions tab
+on:
+  workflow_dispatch:
+
+jobs:
+  node-info:
+    runs-on: [self-hosted, windows]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Display system info
+        run: |
+          echo Hostname: %COMPUTERNAME%
+          echo OS: %OS%
+          echo User: %USERNAME%
+          systeminfo
+          echo Node version:
+          node -v
+          echo NPM version:
+          npm -v

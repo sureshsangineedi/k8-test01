@@ -1,0 +1,39 @@
+name: Get Pods Info
+
+on:
+  workflow_dispatch:   # run manually from Actions tab
+
+jobs:
+  pods-info:
+    runs-on: [self-hosted,windows]   # 👈 your runner has kubectl installed & configured
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Pods Info
+        run: |
+          echo "=== Pods in All Namespaces ==="
+          kubectl get pods -A -o wide
+          
+          echo "=== Pod Details (describe) ==="
+          kubectl describe pods -A | head -50   # limit to first 50 lines
+
+          echo "=== Pod Events ==="
+          kubectl get events -A --sort-by=.metadata.creationTimestamp | tail -20
+
+      - name: Save Pods Info as Artifact
+        run: |
+          kubectl get pods -A -o wide > pods-list.txt
+          kubectl describe pods -A > pods-describe.txt
+          kubectl get events -A --sort-by=.metadata.creationTimestamp > pods-events.txt
+        shell: bash
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pods-info
+          path: |
+            pods-list.txt
+            pods-describe.txt
+            pods-events.txt

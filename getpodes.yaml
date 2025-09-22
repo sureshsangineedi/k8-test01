@@ -1,12 +1,15 @@
 name: Get Pods Info
 
-on: 
-  workflow_dispatch:   # run manually from Actions tab
-
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+ 
 jobs:
-  pods-info:
-    runs-on: [self-hosted, windows]   # 👈 your runner has kubectl installed & configured
-
+  kubernetes-info:
+    runs-on: [self-hosted, windows]  # IMPORTANT: your self-hosted runner in the same network
+ 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

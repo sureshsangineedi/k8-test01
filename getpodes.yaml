@@ -1,6 +1,6 @@
 name: Get Pods Info
 
-on:
+on: 
   workflow_dispatch:   # run manually from Actions tab
 
 jobs:

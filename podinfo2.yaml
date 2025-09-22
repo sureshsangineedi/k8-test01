@@ -28,7 +28,7 @@ jobs:
         run: |
           kubectl get pods -A -o wide | Out-File pods-list.txt
           kubectl describe pods -A | Out-File pods-describe.txt
-          kubectl get events -A --sort-by=.metadata.creationTimestamp | Out-File pods-events.txt
+          
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

@@ -1,0 +1,44 @@
+name: Get Cluster & Node Info
+
+on:
+  workflow_dispatch:   # Run manually from GitHub Actions tab
+
+jobs:
+  get-cluster-info:
+    runs-on: self-hosted   # 👈 your runner (already has kubectl configured) suresh hi ra 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Cluster & Node Info
+        run: |
+          echo "=== Cluster Info ==="
+          kubectl cluster-info
+          
+          echo "=== Node Info ==="
+          kubectl get nodes -o wide
+          
+          echo "=== Namespaces ==="
+          kubectl get ns
+          
+          echo "=== Pods (All namespaces) ==="
+          kubectl get pods -A -o wide
+
+      - name: Save Info as Artifact
+        run: |
+          kubectl cluster-info > cluster-info.txt
+          kubectl get nodes -o wide > nodes-info.txt
+          kubectl get ns > namespaces.txt
+          kubectl get pods -A -o wide > pods-info.txt
+        shell: bash
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8s-info
+          path: |
+            cluster-info.txt
+            nodes-info.txt
+            namespaces.txt
+            pods-info.txt

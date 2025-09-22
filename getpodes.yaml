@@ -5,7 +5,7 @@ on:
 
 jobs:
   pods-info:
-    runs-on: self-hosted   # 👈 your runner has kubectl installed & configured
+    runs-on: [self-hosted, windows]   # 👈 your runner has kubectl installed & configured
 
     steps:
       - name: Checkout code
